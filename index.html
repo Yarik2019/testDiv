@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test div</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        height: 100%;
+      }
+      .block {
+        border: 1px solid red;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <script>
+
+      // Генеруємо 100 div елементів з унікальним текстом
+      const generateDivs = () => {
+        const body = document.body;
+        for (let i = 0; i < 100; i++) {
+          const createDiv = document.createElement("div");
+          const div = body.appendChild(createDiv);
+          div.className = "block box";
+          div.innerText = `div ${i}`;
+        }
+      };
+
+      generateDivs();
+
+      const divsList = document.querySelectorAll(".box");
+
+      // Обробник події кліку на div
+      const divIndexClick = () => {
+        for (let i = 0; divsList.length; i++) {
+          divsList[i].addEventListener("click", () => {
+            handleDiv(divsList[i]);
+          });
+        }
+      };
+
+      divIndexClick();
+
+      function handleDiv(divIndex) {
+        let currentDiv = divIndex;
+        let parent = currentDiv.parentNode;
+        let firstChild = parent.firstChild;
+
+        if (currentDiv === firstChild) {
+          // Переміщуємо div на першу позицію
+          parent.removeChild(currentDiv);
+          parent.insertBefore(currentDiv, firstChild);
+        } else {
+          // Повертаємо div на початкову позицію
+          parent.removeChild(currentDiv);
+          parent.insertBefore(currentDiv, firstChild.nextSibling);
+        }
+      }
+    </script>
+  </body>
+</html>
